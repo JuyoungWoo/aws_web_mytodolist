@@ -1,0 +1,28 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #f8f8f8;
+}
+
+.btn {
+  
+  cursor: pointer;
+}
+.btn:active {
+  background-color: #eee; /*클릭 시 반짝거림*/
+}
+
+
+
+
+
+
+.w-f {
+  width: 100%;
+}
+
+.invisible {
+  display: none !important;
+}

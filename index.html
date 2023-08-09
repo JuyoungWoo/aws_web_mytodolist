@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>MyTodolist</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+		integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="./css/reset.css">
+	<link rel="stylesheet" href="./css/common.css">
+	<link rel="stylesheet" href="./css/sidebar.css">
+	<link rel="stylesheet" href="./css/todolist.css">
+</head>
+
+<body>
+	<div id="root">
+		<div class="container">
+			<aside class="sidebar"><!--사이드바-->
+				<div class="sidebar-header">
+					<h1 class="sidebar-logo"></h1>
+				</div>
+				
+				<div class=""> </div>
+				<div class=""> </div>
+			</aside>
+			<main class="main-container"><!--메인페이지(페이지 전환 컨테이너)-->
+				<!--1. todoPage: 오늘,기본함 (내부 텍스트: innerHTML으로 변환) -->
+				<div class="todo-page-container">
+					<header class="todo-header"><!--페이지 header-->
+						<div class="sidebar-toggle-button" onclick="toggleBtnOnclickHandle();">
+							<i class="fa-solid fa-bars"></i>
+						</div>
+						<div class="title">
+							<h1>Title</h1>
+						</div>
+					</header>
+
+					<div class="todolist-main"><!--페이지 main-->
+						<!--todo input-->
+						<div class="todo-main-input">
+							<input type="text" class="text-input" placeholder="add todo ...">
+							<div class="todo-add-button">
+								<i class="fa-solid fa-plus"></i>
+							</div>
+						</div>
+						<!-- todo list-->
+						<div class="main-list-container">
+							<div class="main-list-items">
+								<h1 class="list-name">오늘</h1>
+								<ul>
+									<li class="list-items">
+										<div class="item-left">
+											<input type="checkbox" name="complete-chkbox" class="checkbox">
+											<label class="" for="complete-chkbox">todo1</label>
+										</div>
+										<div class="item-center">
+
+										</div>
+										<div class="item-right">
+											<i class="fa-solid fa-pen"></i>
+											<i class="fa-solid fa-trash"></i>
+										</div>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+
+				<!--완료된 할일 페이지-->
+				<div class="invisible">
+				</div>
+
+			</main>
+		</div>
+	</div>
+	<script src="./js/todolist.js"></script>
+</body>
+
+</html>

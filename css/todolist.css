@@ -1,0 +1,149 @@
+.container {
+  display: flex;
+  
+  /* position: relative; */
+  margin: 100px auto;
+  width: 700px;
+  height: 600px;
+  background-color: white;
+  overflow: hidden; /*sidebar가 숨겨져야 함*/
+}
+
+.sidebar {
+  transition: width 0.3s;
+  
+  /* transition: left 1s ease; */
+  /*부모인 container에 relative*/
+  /* position: absolute; */
+  /* top: 0px;
+  left: -200px; */
+  border-right: 1px solid #dbdbdb;
+  width: 0px;
+  height: 100%;
+  background-color: #dbdbdb;
+}
+/*container 안에 sidebar 0%  main-container 100% -> */
+.main-container {
+  flex-grow: 1;
+  transition: margin-left 0.3s;
+  
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  border : 1px solid #dbdbdb;
+}
+
+/* 사이드바가 열렸을 때의 스타일 */
+.container.sidebar-open .sidebar {
+  width: 300px; /* 열린 사이드바 너비 */
+}
+.container.sidebar-open .main-container {
+  margin-left: 0px; /* 메인 콘텐츠 이동 */
+}
+
+.todo-header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #eee;
+  justify-content: center;
+}
+
+.sidebar-toggle-button { /*사이드바 토글 버튼*/
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  left: 0;
+  margin-right: 10px;
+}
+
+.sidebar-toggle-button i {
+  font-size: 20px;
+}
+
+.title {
+  flex-grow: 1;
+}
+.title h1{
+  margin: 3px;
+  font-size: 20px;
+}
+.todolist-main { /* 헤더 아래 div*/
+  padding: 5px;
+  width: 100%;
+  height: 500px;
+}
+
+.todo-main-input{
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+}
+
+.text-input {
+  /* transition: all 0.5s ease; */
+  /* position: relative; */
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #dbdbdb;
+  padding: 5px;
+  width: 100%;
+  height: 40px;
+  font-size: 15px;
+}
+
+.text-input:focus {
+  border-bottom: 2px solid #808080;
+}
+
+.todo-add-button {
+  padding: 5px;
+}
+
+.main-list-container {
+  display: flex;
+  margin: 10px;
+  /* padding-right: 5px; */
+  overflow-y: scroll;
+  flex-direction: column;
+}
+
+.main-list-container::-webkit-scrollbar {
+  width: 3px;
+  background-color: white; /*스크롤바의 배경 색*/
+}
+
+.main-list-container::-webkit-scrollbar-thumb {
+  background-color: #dbdbdb; /*스크롤바의 색*/
+  border-radius: 3px;
+}
+
+
+.list-name {
+  margin: 5px 10px;
+  font-size: 16px;
+}
+
+.list-name h1 {
+  font-size: 14px;
+  font-weight: 600;
+}
+.list-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding: 10px;
+  border: 1px solid #dbdbdb;
+}
+.item-left input{
+  margin-right: 10px;
+}
+.item-right i {
+  margin-right: 8px;
+}
