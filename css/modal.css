@@ -1,0 +1,104 @@
+.edit-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #8888889a;
+  transition: all 0.3s ease;
+}
+
+.modal-container {
+  border: 1px solid #dbdbdb;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px #646464;
+}
+
+.modal-header {
+  /* border-bottom: 1px solid #dbdbdb; */
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  height: 80px;
+  width: 300px;
+}
+.modal-header h1 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.modal-title {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.modal-message {
+  width: 100%;
+  text-align: center;
+  /* margin-bottom: 20px; */
+  font-size: 16px;
+	color: #747474;
+  word-wrap: break-word;
+  /* 넘어가면 개행 */
+}
+.modal-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border-bottom: 1px solid #dbdbdb; */
+  padding: 0px 20px 10px;
+  width: 300px;
+}
+  /*modal-main 안의 모든 요소(마지막 제외)에 bottom margin 적용*/
+/* .modal-main>*:not(.modal-main :nth-last-child(1)) {
+  margin-bottom: 10px;
+
+} */
+
+
+.edit-text-input {
+  border-radius: 6px;
+  background-color: #e9e9e9;
+	outline: none;
+  border: none;
+	padding: 0px 10px;
+	height: 35px;
+	
+}
+.edit-text-input:focus {
+	border: none;
+	border: 2px solid #6fb0ff;
+}
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+	margin-bottom: 5px;
+  padding: 5px 20px;
+  width: 300px;
+}
+.modal-footer * {
+	/* margin: 0px 40px; */
+	width: 120px;
+}
+
+.modal-footer .btn:not(.modal-footer .btn:nth-last-child(1)) {
+  margin-right: 5px;
+}
+.cancel-btn {
+	color: #f56060;
+}
+
+.ok-btn {
+	
+}
+/*뒤에서 첫번째가 아닌 요소만 오른쪽에 margin 주기*/
