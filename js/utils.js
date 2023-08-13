@@ -21,19 +21,21 @@ class DateUtils {
 */
     //날짜가 어제 오늘 내일이면 'Yesterday', ...로 변환
     static transSpecificDate(createDateObj) {
-        const btMs = createDateObj.getTime() - new Date().getTime();
-        const btDay =  Math.abs(btMs / (1000 * 60 * 60 * 24));
+        const btMs = new Date(createDateObj).getTime() - new Date().getTime();
+        const btDay =  btMs / (1000 * 60 * 60 * 24);
         switch (btDay){
             //어제
             case -1:
                 return 'Yesterday';
+            //오늘
             case 0:
                 return 'Today';
+            //내일(아직 날짜 지정기능 구현 안돼서 사용 x)
             case 1:
                 return 'Tomorrow';
         }
         
-        return this.toStringByFormatting(createDateObj);
+        // return this.toStringByFormatting(createDateObj);
     }
     //new Date() 한 결과를 '8-23'으로
     static toStringByFormatting(date) {
@@ -44,15 +46,15 @@ class DateUtils {
         return [year, month, day].join("-");
         //리스트의 요소를 문자열로 합쳐줄때 ','을 '-'로 바꿔서 반환
     }
-    static testToStringbyFormatting(date){
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1; //1월을 0으로 반환
-        const day = date.getDate();
+    // static testToStringbyFormatting(date){
+    //     const year = date.getFullYear();
+    //     const month = date.getMonth() + 1; //1월을 0으로 반환
+    //     const day = date.getDate();
         
-        month = this.monthToString(month);
+    //     month = this.monthToString(month);
         
-        return [month, day].join(" ");
-    }
+    //     return [month, day].join(" ");
+    // }
 
     static monthToString(month) {
         switch (month) {

@@ -148,6 +148,7 @@ class TodoListService {
 		this.todayList = new Array();
 		this.completedList = new Array();
 		
+		
 		this.todoList.forEach(todo => {
 			
 			let listItem = `
@@ -169,16 +170,18 @@ class TodoListService {
 				</li>`;
 			if (DateUtils.transSpecificDate(todo.createDateObj) === 'Today' && !todo.completeStatus){ 
 				//생성날짜가 오늘이고 미완료
-				console.log('오늘이고 미완료');
-				todayList.push(todo);
+				console.log('Today(오늘이고 미완료)');
+				this.todayList.push(todo);
+				console.log(this.todayList);
 			} else if (!todo.completeStatus) {
 				//지난 것들 중 미완료
-				overdueList.push(todo);
+				console.log('Overdue(지난 것들 중 미완료)');
+				this.overdueList.push(todo);
 			} else {
 				//완료된 할일
-				completedList.push(todo);
+				console.log('완료된 할일');
+				this.completedList.push(todo);
 			}
-			
 		});
 		
 		//ul 태그요소
