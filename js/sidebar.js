@@ -12,8 +12,7 @@ toggleBtnOnclickHandle = () => {
 }
 
 const sidebarMenuOnClickHandle = (target) => {
-	// console.log(target.innerHTML); 시작하기 / todolist
-	switch (target.innerHTML) {
+	switch (target.innerText) {
 		case "Today":
 			Routes.getInstance().routeState = "today";
 			break;
@@ -21,6 +20,7 @@ const sidebarMenuOnClickHandle = (target) => {
 			Routes.getInstance().routeState = "inbox"
 			break;
 	}
-	Routes.getInstance().show();
-	sidebarToggleButtonOnClickHandle();//사이드바 메뉴 누르면 사이드바가 닫히게
+	Routes.getInstance().show(); //Routes.show(): routeState에 따라 페이지 전환
+	toggleBtnOnclickHandle();//사이드바 메뉴 누르면 사이드바가 닫히게
 }
+

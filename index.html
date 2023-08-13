@@ -45,17 +45,20 @@
 
 					<div class="todolist-main"><!--페이지 main-->
 						<!--todo input-->
+						
 						<div class="todo-main-input">
-							<input type="text" class="todo-text-input" placeholder="add todo ..." onkeyup="addTodoOnKeyUpHandle();">
-							<div class="todo-add-button">
+							<input type="text" class="todo-text-input" placeholder="add todo ..." onkeyup="addTodoOnKeyUpHandle(event);">
+							
+							<div class="todo-add-button" onclick="addTodoButtonOnclickHandle()">
 								<i class="fa-solid fa-plus"></i>
 							</div>
-						</div>
+						</div> 
+				
 						<!-- todo list-->
 						<div class="main-list-container">
 							<div class="main-list-items">
-								<h1 class="list-name">Today</h1><!--list의 카테고리 이름-->
 								<ul class="list-contents">
+									<h1 class="list-name">Today</h1><!--list의 카테고리 이름-->
 									<li class="list-items">
 										<div class="item-left">
 											<input type="checkbox" id="complete-chkbox" class="complete-chkboxes" value="1">
@@ -70,11 +73,39 @@
 											<button class="todo-delete-button"> <i class="fa-solid fa-trash"></i> </button>
 										</div>
 									</li>
-							
+									<li class="list-items">
+										<div class="item-left">
+											<input type="checkbox" id="complete-chkbox" class="complete-chkboxes" value="1">
+											<label for="complete-chkbox"></label>
+										</div>
+										<div class="item-center">
+											<pre class="todo-content">todo-content</pre>
+										</div>
+										<div class="item-right">
+											<p>Today</p>
+											<button class="todo-edit-button"> <i class="fa-solid fa-pen"></i> </button>
+											<button class="todo-delete-button"> <i class="fa-solid fa-trash"></i> </button>
+										</div>
+									</li>
 								</ul>
-								
+									<h1 class="list-name">Completed</h1><!--list의 카테고리 이름-->
+									<li class="list-items">
+										<div class="item-left">
+											<input type="checkbox" id="complete-chkbox" class="complete-chkboxes" value="1">
+											<label for="complete-chkbox"></label>
+										</div>
+										<div class="item-center">
+											<pre class="todo-content">todo-content</pre>
+										</div>
+										<div class="item-right">
+											<p>Today</p>
+											<button class="todo-edit-button"> <i class="fa-solid fa-pen"></i> </button>
+											<button class="todo-delete-button"> <i class="fa-solid fa-trash"></i> </button>
+										</div>
+									</li>
+									
+								</ul>
 							</div>
-
 						</div>
 					</div>
 					
@@ -87,6 +118,7 @@
 				</div>
 
 			</main>
+			<!--모달창-->
 			<div class="edit-modal invisible"> <!--invisible-->
 				<div class="modal-container">
 					<header class="modal-header">
