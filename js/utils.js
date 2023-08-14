@@ -1,13 +1,4 @@
-class DateUtils {
-    static leftPad(value) {
-        if (value >= 10) {
-            return value;
-        }
-        return `0${value}`; //날짜가 10보다 작으면 01, 02, ..처럼 표기
-    }
-
-
-    /*
+/*
     0. 일단 new Date()-> 월 일 getter 함수 불러오기
     1. updateTodoList()에서 createDate()가 오늘인지 체크해서 True면 'Today'로 
     2. Today, Yesterday, Tomorrow가 아니면??
@@ -17,35 +8,53 @@ class DateUtils {
 /*   //메소드 종류
     1. 날짜가 어제 오늘 내일이면 'Today', ... 로 표현해주는 함수
     2. 
-    
 */
-    //날짜가 어제 오늘 내일이면 'Yesterday', ...로 변환
-    static transSpecificDate(createDateObj) {
-        const btMs = new Date(createDateObj).getTime() - new Date().getTime();
-        const btDay =  btMs / (1000 * 60 * 60 * 24);
-        switch (btDay){
-            //어제
-            case -1:
-                return 'Yesterday';
-            //오늘
-            case 0:
-                return 'Today';
-            //내일(아직 날짜 지정기능 구현 안돼서 사용 x)
-            case 1:
-                return 'Tomorrow';
+class DateUtils {
+    static leftPad(value) {
+        if (value >= 10) {
+            return value;
         }
-        
-        // return this.toStringByFormatting(createDateObj);
+        return `0${value}`; //날짜가 10보다 작으면 01, 02, ..처럼 표기
     }
+
+    //날짜가 어제 오늘 내일이면 'Yesterday', ... 로 변환
+    // static transSpecificDate(createDateObj) {        
+    //     const createDateMs = new Date(createDateObj).getTime();
+    //     const todayMs = new Date().getTime();
+        
+    //     // console.log(createDateMs);
+    //     // console.log(todayMs);
+    //     // console.log(Math.floor(createDateMs / 1000000) * 1000000);
+    //     // console.log(Math.floor(todayMs / 1000000) * 1000000);
+        
+    //     createDateMs = Math.floor(createDateMs / 1000000) * 1000000;
+    //     todayMs = Math.floor(todayMs / 1000000) * 1000000;
+    //     const btMs = createDateMs - todayMs;
+    //     const btDay =  btMs / (1000 * 60 * 60 * 24);
+    //     switch (btDay){
+    //         //어제
+    //         case -1:
+    //             return 'Yesterday';
+    //         //오늘
+    //         case 0:
+    //             return 'Today';
+    //         //내일(아직 날짜 지정기능 구현 안돼서 사용 x)
+    //         case 1:
+    //             return 'Tomorrow';
+    //     }
+        
+    //     // return this.toStringByFormatting(createDateObj);
+    // }
     //new Date() 한 결과를 '8-23'으로
     static toStringByFormatting(date) {
         const year = date.getFullYear();
-        const month = date.getMonth() + 1; //1월을 0으로 반환
-        const day = date.getDate();
+        const month = this.leftPad(date.getMonth() + 1); //1월을 0으로 반환
+        const day = this.leftPad(date.getDate());
         
         return [year, month, day].join("-");
         //리스트의 요소를 문자열로 합쳐줄때 ','을 '-'로 바꿔서 반환
     }
+    
     // static testToStringbyFormatting(date){
     //     const year = date.getFullYear();
     //     const month = date.getMonth() + 1; //1월을 0으로 반환

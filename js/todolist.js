@@ -16,13 +16,15 @@ const checkedOnChangeHandle = (target) => {
 }
 
 const modifyTodoOnClickHandle = (target) => {
-	openModal();
+	openEditModal();
 	modifyModal(TodoListService.getInstance().getTodoById(target.value));
 }
 
 const deleteTodoOnClickHandle = (target) => {
+	openRemoveModal();
 	TodoListService.getInstance().removeTodo(target.value);
 }
+
 //todo 객체 생성하고 addTodo() 호출
 const generateTodoObj = () => {
 	const todoContent = document.querySelector(".todo-text-input").value;
@@ -33,7 +35,6 @@ const generateTodoObj = () => {
 		createDateObj: new Date(),
 		completeStatus: false //처음엔 체크 안되어있음
 	};
-
 	TodoListService.getInstance().addTodo(todoObj);
 }
 
@@ -41,7 +42,7 @@ const generateTodoObj = () => {
 class TodoListService {
 	todoList = new Array();
 	todoIndex = 1;
-	
+
 	static #instance = null;
 
 	static getInstance() {
@@ -54,12 +55,12 @@ class TodoListService {
 	overdueList = new Array();
 	todayList = new Array();
 	completedList = new Array();
-	
+
 	constructor() { //객체가 생성될 때 기존 로컬스토리지에 있는 데이터를 불러옴
 		this.loadTodoList();
 	}
 	//local Storage에 있는 기존 데이터 불러와서 todoList에 추가
-	loadTodoList() { 
+	loadTodoList() {
 		//JSON.parse(제이슨 문자열); : json -> 객체
 		//JSON.stringify(객체); : 객체 -> json
 
@@ -79,7 +80,7 @@ class TodoListService {
 		localStorage.setItem("todoList", JSON.stringify(this.todoList));
 		//배열 -> json으로 만들어 로컬 스토리지에 저장
 	}
-	
+
 	//수정할 때 수정할 할일의 id만 가져옴
 	getTodoById(id) {
 		//filter(): 조건에 맞는 요소만 새 배열에 담아줌
@@ -105,8 +106,7 @@ class TodoListService {
 	}
 
 	setCompleteStatus(id, status) {
-		//매개변수로 받아온 id는 html요소의 value임(문자열)
-
+		//매개변수로 받아온 id는 html요소의 value임(문자열)-> parseInt()로 숫자로 변환
 		this.todoList.forEach((todo, index) => {
 			//(todo를 하나씩 꺼내면서 index도 지정)
 			if (todo.id === parseInt(id)) {
@@ -114,6 +114,7 @@ class TodoListService {
 			}
 		});
 		this.saveLocalStorage();
+		this.updateTodoList();
 	}
 
 	setTodo(todoObj) {
@@ -143,14 +144,11 @@ class TodoListService {
 		
 		//1. Today이면 <li> 요소는 Overdue, Today, 오늘 체크한 completed만
 		//2. Inbox이면 incompleted(이건 list-name 없음), completed만
-		
 		this.overdueList = new Array();
 		this.todayList = new Array();
 		this.completedList = new Array();
-		
-		
+
 		this.todoList.forEach(todo => {
-			
 			let listItem = `
 				<li class="list-items">
 					<div class="item-left">
@@ -162,46 +160,82 @@ class TodoListService {
 					</div>
 					<div class="item-right">
 						<p class="todolist-date">${todo.createDate}</p>
-						<div class="todolist-item-buttons">
-							<button class="todo-edit-button" value="${todo.id}" onclick="modifyTodoOnClickHandle(this);"></button>
-							<button class="todo-delete-button" value="${todo.id}" onclick="deleteTodoOnClickHandle(this);"></button>
-						</div>
+						<button class="todo-edit-button" value="${todo.id}" onclick="modifyTodoOnClickHandle(this);"> 
+							<i class="fa-solid fa-pen"></i>
+						</button>
+						<button class="todo-delete-button" value="${todo.id}" onclick="deleteTodoOnClickHandle(this);">
+							<i class="fa-solid fa-trash"></i>
+						</button>
 					</div>
-				</li>`;
-			if (DateUtils.transSpecificDate(todo.createDateObj) === 'Today' && !todo.completeStatus){ 
+				</li>`;	
+			// console.log(DateUtils.transSpecificDate(todo.createDateObj));
+			if (todo.createDate === DateUtils.toStringByFormatting(new Date()) && !todo.completeStatus) {
 				//생성날짜가 오늘이고 미완료
 				console.log('Today(오늘이고 미완료)');
-				this.todayList.push(todo);
-				console.log(this.todayList);
+				this.todayList.push(listItem);
 			} else if (!todo.completeStatus) {
 				//지난 것들 중 미완료
 				console.log('Overdue(지난 것들 중 미완료)');
-				this.overdueList.push(todo);
+				this.overdueList.push(listItem);
 			} else {
 				//완료된 할일
-				console.log('완료된 할일');
-				this.completedList.push(todo);
+				console.log('Completed(완료된 할일)');
+				this.completedList.push(listItem);
 			}
+			
 		});
-		
+
 		//ul 태그요소
 		const todolistMainContainer = document.querySelector(".list-contents");
-		// todolistMainContainer.innerHTML = <h1 class="list-name">Completed</h1>
 		todolistMainContainer.innerHTML = "";
-		if(this.overdueList.length !== 0) {
-			todolistMainContainer.innerHTML += `<h1 class="list-name">Overdue</h1>`;
-			todolistMainContainer.innerHTML += this.overdueList.join("");
+		
+		//1. Today인 경우
+		switch(Routes.getInstance().routeState){
+			case "today":
+				if (this.overdueList.length !== 0) {
+					todolistMainContainer.innerHTML += `<h1 class="list-name">Overdue</h1>`;
+					todolistMainContainer.innerHTML += this.overdueList.join("");
+				}
+				if (this.todayList.length !== 0) {
+					todolistMainContainer.innerHTML += `<h1 class="list-name">Today</h1>`;
+					todolistMainContainer.innerHTML += this.todayList.join("");
+				}
+				// console.log(this.completedList.length);
+				if (this.completedList.length !== 0) {
+					todolistMainContainer.innerHTML += `<h1 class="list-name">Completed</h1>`;
+					todolistMainContainer.innerHTML += this.completedList.join("");
+				}
+				break;
+				
+			case "inbox":
+				todolistMainContainer.innerHTML = this.todoList.map(todo => {
+					if(!todo.completeStatus) {
+						return `
+						<li class="list-items">
+							<div class="item-left">
+								<input type="checkbox" id="complete-chkbox${todo.id}" class="complete-chkboxes" ${todo.completeStatus ? "checked" : ""} value="${todo.id}" onchange="checkedOnChangeHandle(this);">
+								<label for="complete-chkbox${todo.id}"></label>
+							</div>
+							<div class="item-center">
+								<pre class="todo-content">${todo.todoContent}</pre>
+							</div>
+							<div class="item-right">
+								<p class="todolist-date">${todo.createDate}</p>
+								<button class="todo-edit-button" value="${todo.id}" onclick="modifyTodoOnClickHandle(this);"> 
+									<i class="fa-solid fa-pen"></i>
+								</button>
+								<button class="todo-delete-button" value="${todo.id}" onclick="deleteTodoOnClickHandle(this);">
+									<i class="fa-solid fa-trash"></i>
+								</button>
+							</div>
+						</li>`;
+					}
+				}).join("");
+				todolistMainContainer.innerHTML += `<h1 class="list-name">Completed</h1>`;
+				todolistMainContainer.innerHTML += this.completedList.join("");
 		}
-		if(this.todayList.length !== 0) {
-			todolistMainContainer.innerHTML += `<h1 class="list-name">Today</h1>`;
-			todolistMainContainer.innerHTML += this.todayList.join("");
-		}
-		// console.log(this.completedList.length);
-		if(this.completedList.length !== 0) {
-			todolistMainContainer.innerHTML += `<h1 class="list-name">Completed</h1>`;
-			todolistMainContainer.innerHTML += this.completedList.join("");
-		}
-
+		
+		//2. Inbox인 경우
 	}
 
 }
