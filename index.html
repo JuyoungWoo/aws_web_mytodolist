@@ -47,9 +47,7 @@
 						<!--todo input-->
 
 						<div class="todo-main-input">
-							<input type="text" class="todo-text-input" placeholder="add todo ..."
-								onkeyup="addTodoOnKeyUpHandle(event);">
-
+							<input type="text" class="todo-text-input" placeholder="add todo ..." onkeyup="addTodoOnKeyUpHandle(event);">
 							<div class="todo-add-button" onclick="addTodoButtonOnclickHandle()">
 								<i class="fa-solid fa-plus"></i>
 							</div>
@@ -58,87 +56,37 @@
 						<!-- todo list-->
 						<div class="main-list-container">
 							<div class="main-list-items">
-								<ul class="list-contents"><!--js로 li 요소 바꿔줌-->
-									<h1 class="list-name">Today</h1><!--list의 카테고리 이름-->
+								<ul class="list-contents">
+									<!--js로 li 요소 바꿔줌-->
+									<!--
 									<li class="list-items">
 										<div class="item-left">
-											<input type="checkbox" id="complete-chkbox" class="complete-chkboxes"
-												value="1">
-											<label for="complete-chkbox"></label>
+											<input type="checkbox" id="complete-chkbox${todo.id}" class="complete-chkboxes" ${todo.completeStatus ? "checked" : ""}
+											 value="${todo.id}" onchange="checkedOnChangeHandle(this);">
+											<label for="complete-chkbox${todo.id}"></label>
 										</div>
 										<div class="item-center">
-											<pre class="todo-content">todo-content</pre>
+											<pre class="todo-content">${todo.todoContent}</pre>
 										</div>
 										<div class="item-right">
-											<p>Today</p>
-											<button class="todo-edit-button"> <i class="fa-solid fa-pen"></i> </button>
-											<button class="todo-delete-button"> <i class="fa-solid fa-trash"></i>
+											<p class="todolist-date">${todo.createDate}</p>
+											<button class="todo-edit-button" value="${todo.id}" onclick="modifyTodoOnClickHandle(this);"> 
+												<i class="fa-solid fa-pen"></i>
+											</button>
+											<button class="todo-delete-button" value="${todo.id}" onclick="deleteTodoOnClickHandle(this);">
+												<i class="fa-solid fa-trash"></i>
 											</button>
 										</div>
 									</li>
-									<li class="list-items">
-										<div class="item-left">
-											<input type="checkbox" id="complete-chkbox" class="complete-chkboxes" value="1" onchange="checkedOnChangeHandle(this);" checked>
-											<label for="complete-chkbox"></label>
-										</div>
-										<div class="item-center">
-											<pre class="todo-content">todo-content</pre>
-										</div>
-										<div class="item-right">
-											<p>Today</p>
-											<button class="todo-edit-button" value="${todo.id}"
-												onclick="modifyTodoOnClickHandle(this);"> <i class="fa-solid fa-pen"></i>
-											</button>
-											<button class="todo-delete-button" value="${todo.id}"
-												onclick="deleteTodoOnClickHandle(this);"> <i class="fa-solid fa-trash"></i>
-											</button>
-										</div>
-									</li>
-									<li class="list-items">
-										<div class="item-left">
-											<input type="checkbox" id="complete-chkbox" class="complete-chkboxes"
-												value="1">
-											<label for="complete-chkbox"></label>
-										</div>
-										<div class="item-center">
-											<pre class="todo-content">todo-content</pre>
-										</div>
-										<div class="item-right">
-											<p>Today</p>
-											<button class="todo-edit-button"> <i class="fa-solid fa-pen"></i> </button>
-											<button class="todo-delete-button"> <i class="fa-solid fa-trash"></i>
-											</button>
-										</div>
-									</li>
-									<h1 class="list-name">Completed</h1><!--list의 카테고리 이름-->
-									
-									<li class="list-items">
-										<div class="item-left">
-											<input type="checkbox" id="complete-chkbox" class="complete-chkboxes" value="1"
-												onchange="checkedOnChangeHandle(this);" checked>
-											<label for="complete-chkbox"></label>
-										</div>
-										<div class="item-center">
-											<pre class="todo-content">todo-content</pre>
-										</div>
-										<div class="item-right">
-											<p>Today</p>
-											<button class="todo-edit-button" value="${todo.id}"
-												onclick="modifyTodoOnClickHandle(this);"> <i class="fa-solid fa-pen"></i>
-											</button>
-											<button class="todo-delete-button" value="${todo.id}"
-												onclick="deleteTodoOnClickHandle(this);"> <i class="fa-solid fa-trash"></i>
-											</button>
-										</div>
-									</li>
+									-->
 								</ul>
 							</div>
 						</div>
 					</div>
 				</div>
 			</main>
-			<!--모달창-->
-			<div class="edit-modal invisible"> <!--invisible-->
+			<!--수정 모달창-->
+			<div class="modal edit-modal invisible"> <!--invisible toggle-->
 				<div class="modal-container">
 					<header class="modal-header">
 						<h1 class="modal-title">Edit Todo</h1>
@@ -149,7 +97,35 @@
 					</main>
 					<footer class="modal-footer">
 						<button class="btn">Cancel</button>
-						<button class="btn" style="color: #26d452;">Ok</button>
+						<button class="btn" style="color: #26d452;">OK</button>
+					</footer>
+				</div>
+			</div>
+			<!--
+			<div class="modal-container">
+				<header class="modal-header">
+					<h1 class="modal-title">Edit Todo</h1>
+					<p class="modal-message">please edit todo</p>
+				</header>
+				<main class="modal-main">
+					<input type="text" class="edit-text-input w-f" value="${todo.todoContent}">
+				</main>
+				<footer class="modal-footer">
+					<button class="btn" onclick="closeModal()">Cancel</button>
+					<button class="btn" style="color: #26d452;" onclick="modifySubmitButtonOnClick(${todo.id}); closeModal();">OK</button>
+				</footer>
+			</div>
+			-->
+			<!--삭제 모달창-->
+			<div class="modal delete-modal invisible">
+				<div class="modal-container">
+					<header class="modal-header">
+						<h1 class="modal-title">Delete Todo</h1>
+						<p class="modal-message">Are you sure you want to delete it?</p>
+					</header>
+					<footer class="modal-footer">
+						<button class="btn" onclick="closeModal(`delete`)";>Cancel</button>
+						<button class="btn" style="color: #eb5035;">Delete</button>
 					</footer>
 				</div>
 			</div>

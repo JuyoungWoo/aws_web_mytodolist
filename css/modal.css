@@ -8,9 +8,20 @@
   width: 100%;
   height: 100%;
   background-color: #8888889a;
-  transition: all 0.3s ease;
+  transition: all 0.5s ease;
 }
+.delete-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #8888889a;
 
+}
 .modal-container {
   border: 1px solid #dbdbdb;
   border-radius: 10px;
@@ -24,7 +35,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 15px;
   height: 80px;
   width: 300px;
 }
@@ -76,7 +87,7 @@
 }
 .edit-text-input:focus {
 	border: none;
-	border: 2px solid #6fb0ff;
+	border: 1.5px solid #26d452;
 }
 .modal-footer {
   display: flex;
@@ -90,15 +101,11 @@
 	/* margin: 0px 40px; */
 	width: 120px;
 }
-
+/*뒤에서 첫번째가 아닌 요소만 오른쪽에 margin 주기*/
 .modal-footer .btn:not(.modal-footer .btn:nth-last-child(1)) {
   margin-right: 5px;
 }
-.cancel-btn {
-	color: #f56060;
-}
 
-.ok-btn {
-	
-}
-/*뒤에서 첫번째가 아닌 요소만 오른쪽에 margin 주기*/
+
+
+

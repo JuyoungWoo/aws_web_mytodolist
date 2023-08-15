@@ -16,13 +16,13 @@ const checkedOnChangeHandle = (target) => {
 }
 
 const modifyTodoOnClickHandle = (target) => {
-	openEditModal();
-	modifyModal(TodoListService.getInstance().getTodoById(target.value));
+	openModal("modify");
+	modifyModal(TodoListService.getInstance().getTodoById(target.value)); //수정모달창을 띄움과 동시에 선택한 todo의 content를 보여줌 
 }
 
 const deleteTodoOnClickHandle = (target) => {
-	openRemoveModal();
-	TodoListService.getInstance().removeTodo(target.value);
+	openModal("delete");
+	//TodoListService.getInstance().removeTodo(target.value);
 }
 
 //todo 객체 생성하고 addTodo() 호출
@@ -103,6 +103,7 @@ class TodoListService {
 		//배열 -> json으로 만들어 로컬 스토리지에 저장
 		this.updateTodoList();
 		this.todoIndex++;
+		document.querySelector('.todo-text-input').value = "";
 	}
 
 	setCompleteStatus(id, status) {
@@ -141,7 +142,6 @@ class TodoListService {
 	}
 
 	updateTodoList() {
-		
 		//1. Today이면 <li> 요소는 Overdue, Today, 오늘 체크한 completed만
 		//2. Inbox이면 incompleted(이건 list-name 없음), completed만
 		this.overdueList = new Array();
@@ -171,18 +171,14 @@ class TodoListService {
 			// console.log(DateUtils.transSpecificDate(todo.createDateObj));
 			if (todo.createDate === DateUtils.toStringByFormatting(new Date()) && !todo.completeStatus) {
 				//생성날짜가 오늘이고 미완료
-				console.log('Today(오늘이고 미완료)');
 				this.todayList.push(listItem);
 			} else if (!todo.completeStatus) {
 				//지난 것들 중 미완료
-				console.log('Overdue(지난 것들 중 미완료)');
 				this.overdueList.push(listItem);
 			} else {
 				//완료된 할일
-				console.log('Completed(완료된 할일)');
 				this.completedList.push(listItem);
 			}
-			
 		});
 
 		//ul 태그요소
@@ -208,6 +204,7 @@ class TodoListService {
 				break;
 				
 			case "inbox":
+				//incompleted
 				todolistMainContainer.innerHTML = this.todoList.map(todo => {
 					if(!todo.completeStatus) {
 						return `
@@ -231,11 +228,14 @@ class TodoListService {
 						</li>`;
 					}
 				}).join("");
-				todolistMainContainer.innerHTML += `<h1 class="list-name">Completed</h1>`;
-				todolistMainContainer.innerHTML += this.completedList.join("");
+				
+				//completed
+				if (this.completedList.length !== 0) {
+					todolistMainContainer.innerHTML += `<h1 class="list-name">Completed</h1>`;
+					todolistMainContainer.innerHTML += this.completedList.join("");
+				}
 		}
 		
-		//2. Inbox인 경우
 	}
 
 }
